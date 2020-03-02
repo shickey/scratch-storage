@@ -37,9 +37,14 @@ class WebHelper extends Helper {
         /**
          * Set of tools to best load many assets in parallel. If one tool
          * cannot be used, it will use the next.
+         *
+         * NOTE(sean): For the Art of Tinkering iOS tool, we change this to
+         * only use tools that are immediately ready since inline web workers
+         * loading from file URLs on iOS are not well supported.
+         *
          * @type {ProxyTool}
          */
-        this.assetTool = new ProxyTool();
+        this.assetTool = new ProxyTool(ProxyTool.TOOL_FILTER.READY);
 
         /**
          * Set of tools to best load project data in parallel with assets. This
